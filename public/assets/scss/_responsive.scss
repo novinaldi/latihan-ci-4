@@ -1,0 +1,64 @@
+/*
+File: Responsive
+*/
+
+
+@media (min-width: 768px) and (max-width: 991px) {
+  body {
+    overflow-x: hidden;
+  }
+}
+
+
+@media (max-width: 767px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .fc-toolbar .fc-right {
+    float: left;
+    margin: 10px 0;
+  }
+
+}
+
+@media (max-width: 620px) {
+  .page-header-title {
+    text-align: center;
+  }
+
+  .dataTables_paginate {
+    .page-link {
+      padding: .35rem .5rem;
+    }
+  }
+
+  .mo-mb-2 {
+    margin-bottom: 10px;
+  }
+
+  .mo-mt-2 {
+    margin-top: 10px !important;
+  }
+
+  .pagination-lg .page-link {
+    padding: .25rem .5rem;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hide-phone,.notify-icon {
+    display: none;
+  }
+  .dropdown-menu-lg {
+    width: 200px;
+  }
+  .notify-details {
+    margin-left: 0 !important;
+  }
+}
+
+
+
+
