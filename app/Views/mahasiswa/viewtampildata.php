@@ -17,46 +17,53 @@
 <div class="col-sm-12">
     <div class="card m-b-30">
         <div class="card-body">
-            <p class="card-text">
-                <table class="table table-sm table-striped" id="datamahasiswa">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>No.BP</th>
-                            <th>Nama Mahasiswa</th>
-                            <th>Tempat Lahir</th>
-                            <th>Tgl.Lahir</th>
-                            <th>Jenkel</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
 
-                    <tbody>
-                        <?php $nomor = 0;
-                        foreach ($tampildata as $row) :
-                            $nomor++;
-                        ?>
-                        <tr>
-                            <td><?= $nomor ?></td>
-                            <td><?= $row['nobp'] ?></td>
-                            <td><?= $row['nama'] ?></td>
-                            <td><?= $row['tmplahir'] ?></td>
-                            <td><?= $row['tgllahir'] ?></td>
-                            <td><?= $row['jenkel'] ?></td>
-                            <td>
+            <div class="card-title">
+                <button type="button" class="btn btn-primary btn-sm tomboltambah">
+                    <i class="fa fa-plus-circle"></i> Tambah Data
+                </button>
+            </div>
 
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+            <p class="card-text viewdata">
+
             </p>
         </div>
     </div>
 </div>
+<div class="viewmodal" style="display: none;"></div>
 <script>
+function datamahasiswa() {
+    $.ajax({
+        url: "<?= site_url('mahasiswa/ambildata') ?>",
+        dataType: "json",
+        success: function(response) {
+            $('.viewdata').html(response.data);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status + "\n" + xhr.responseText + "\n" +
+                thrownError);
+        }
+    });
+}
 $(document).ready(function() {
-    $('#datamahasiswa').DataTable();
+    datamahasiswa();
+
+    $('.tomboltambah').click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: "<?= site_url('mahasiswa/formtambah') ?>",
+            dataType: "json",
+            success: function(response) {
+                $('.viewmodal').html(response.data).show();
+
+                $('#modaltambah').modal('show');
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" +
+                    thrownError);
+            }
+        });
+    });
 });
 </script>
 <?= $this->endSection('') ?>

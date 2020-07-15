@@ -16,6 +16,14 @@
     <link href="<?= base_url() ?>/assets/css/icons.css" rel="stylesheet" type="text/css">
     <link href="<?= base_url() ?>/assets/css/style.css" rel="stylesheet" type="text/css">
 
+    <link href="<?= base_url() ?>/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+        type="text/css">
+
+    <!-- sweetalert -->
+    <link href="<?= base_url() ?>/assets/plugins/node_modules/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet"
+        type="text/css">
+    <script src="<?= base_url() ?>/assets/plugins/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
     <script src="<?= base_url() ?>/assets/js/jquery.min.js"></script>
 </head>
 
