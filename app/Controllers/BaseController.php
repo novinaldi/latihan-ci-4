@@ -16,6 +16,7 @@ namespace App\Controllers;
  */
 
 use CodeIgniter\Controller;
+use App\Models\Modelmahasiswa;
 
 class BaseController extends Controller
 {
@@ -42,5 +43,7 @@ class BaseController extends Controller
 		//--------------------------------------------------------------------
 		// E.g.:
 		// $this->session = \Config\Services::session();
+
+		$this->mhs = new Modelmahasiswa;
 	}
 }
