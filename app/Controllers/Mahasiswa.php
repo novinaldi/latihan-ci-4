@@ -162,4 +162,65 @@ class Mahasiswa extends BaseController
             echo json_encode($msg);
         }
     }
+
+
+
+    public function formtambahbanyak()
+    {
+        if ($this->request->isAJAX()) {
+            $msg = [
+                'data' => view('mahasiswa/formtambahbanyak')
+            ];
+
+            echo json_encode($msg);
+        }
+    }
+
+    public function simpandatabanyak()
+    {
+        if ($this->request->isAJAX()) {
+            $nobp = $this->request->getVar('nobp');
+            $nama = $this->request->getVar('nama');
+            $tempat = $this->request->getVar('tempat');
+            $tgl = $this->request->getVar('tgl');
+            $jenkel = $this->request->getVar('jenkel');
+
+            $jmldata = count($nobp);
+
+            for ($i = 0; $i < $jmldata; $i++) {
+                $this->mhs->insert([
+                    'nobp' => $nobp[$i],
+                    'nama' => $nama[$i],
+                    'tmplahir' => $tempat[$i],
+                    'tgllahir' => $tgl[$i],
+                    'jenkel' => $jenkel[$i],
+                ]);
+            }
+
+            $msg = [
+                'sukses' => "$jmldata data mahasiswa berhasil tersimpan"
+            ];
+
+            echo json_encode($msg);
+        }
+    }
+
+    public function hapusbanyak()
+    {
+        if ($this->request->isAJAX()) {
+            $nobp = $this->request->getVar('nobp');
+
+            $jmldata = count($nobp);
+
+            for ($i = 0; $i < $jmldata; $i++) {
+                $this->mhs->delete($nobp[$i]);
+            }
+
+            $msg = [
+                'sukses' => "$jmldata data mahasiswa berhasil dihapus"
+            ];
+
+            echo json_encode($msg);
+        }
+    }
 }

@@ -1,6 +1,15 @@
+<?= form_open('mahasiswa/hapusbanyak', ['class' => 'formhapusbanyak']) ?>
+<p>
+    <button type="submit" class="btn btn-danger">
+        <i class="fa fa-trash-o"></i> Hapus Banyak
+    </button>
+</p>
 <table class="table table-sm table-striped" id="datamahasiswa">
     <thead>
         <tr>
+            <th>
+                <input type="checkbox" id="centangSemua">
+            </th>
             <th>No</th>
             <th>No.BP</th>
             <th>Nama Mahasiswa</th>
@@ -17,6 +26,9 @@
             $nomor++;
         ?>
         <tr>
+            <td>
+                <input type="checkbox" name="nobp[]" class="centangNobp">
+            </td>
             <td><?= $nomor ?></td>
             <td><?= $row['nobp'] ?></td>
             <td><?= $row['nama'] ?></td>
@@ -35,9 +47,69 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+<?= form_close(); ?>
 <script>
 $(document).ready(function() {
     $('#datamahasiswa').DataTable();
+
+    $('#centangSemua').click(function(e) {
+
+        if ($(this).is(':checked')) {
+            $('.centangNobp').prop('checked', true);
+        } else {
+            $('.centangNobp').prop('checked', false);
+        }
+    });
+
+    $('.formhapusbanyak').submit(function(e) {
+        e.preventDefault();
+        let jmldata = $('.centangNobp:checked');
+
+        if (jmldata.length === 0) {
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Perhatian',
+                text: 'Maaf silahkan pilih data yang mau dihapus !'
+            });
+
+        } else {
+
+            Swal.fire({
+                title: 'Hapus Data Banyak',
+                text: `Yakin data mahasiswa dihapus sebanyak ${jmldata.length} data ?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya,Hapus',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                $.ajax({
+                    type: "post",
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.sukses) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.sukses
+                            });
+                            datamahasiswa();
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status + "\n" + xhr.responseText + "\n" +
+                            thrownError);
+                    }
+                });
+            })
+
+        }
+        return false;
+    });
 });
 
 function edit(nobp) {

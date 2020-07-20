@@ -22,6 +22,9 @@
                 <button type="button" class="btn btn-primary btn-sm tomboltambah">
                     <i class="fa fa-plus-circle"></i> Tambah Data
                 </button>
+                <button type="button" class="btn btn-info btn-sm tomboltambahbanyak">
+                    <i class="fa fa-plus-circle"></i> Tambah Data Banyak
+                </button>
             </div>
 
             <p class="card-text viewdata">
@@ -57,6 +60,24 @@ $(document).ready(function() {
                 $('.viewmodal').html(response.data).show();
 
                 $('#modaltambah').modal('show');
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" +
+                    thrownError);
+            }
+        });
+    });
+
+    $('.tomboltambahbanyak').click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: "<?= site_url('mahasiswa/formtambahbanyak') ?>",
+            dataType: "json",
+            beforeSend: function() {
+                $('.viewdata').html('<i class="fa fa-spin fa-spinner"></i>')
+            },
+            success: function(response) {
+                $('.viewdata').html(response.data).show();
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert(xhr.status + "\n" + xhr.responseText + "\n" +
