@@ -27,7 +27,7 @@
         ?>
         <tr>
             <td>
-                <input type="checkbox" name="nobp[]" class="centangNobp">
+                <input type="checkbox" name="nobp[]" class="centangNobp" value="<?= $row['nobp'] ?>">
             </td>
             <td><?= $nomor ?></td>
             <td><?= $row['nobp'] ?></td>
