@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\Modelmahasiswa;
+use App\Models\Modeldatamahasiswa;
+use Config\Services;
 
 class Mahasiswa extends BaseController
 {
@@ -29,6 +31,48 @@ class Mahasiswa extends BaseController
             exit('Maaf tidak dapat diproses');
         }
     }
+
+
+    public function listdata()
+    {
+        $request = Services::request();
+        $datamodel = new Modeldatamahasiswa($request);
+        if ($request->getMethod(true) == 'POST') {
+            $lists = $datamodel->get_datatables();
+            $data = [];
+            $no = $request->getPost("start");
+            foreach ($lists as $list) {
+                $no++;
+                $row = [];
+
+                $tomboledit = "<button type=\"button\" class=\"btn btn-info btn-sm\" onclick=\"edit('" . $list->nobp . "')\"><i class=\"fa fa-tags\"></i></button>";
+
+                $tombolhapus = "<button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"hapus('" . $list->nobp . "')\">
+                <i class=\"fa fa-trash\"></i>
+            </button>";
+
+                $row[] = "<input type=\"checkbox\" name=\"nobp[]\" class=\"centangNobp\" value=\"$list->nobp\">";
+                $row[] = $no;
+                $row[] = $list->nobp;
+                $row[] = $list->nama;
+                $row[] = $list->tmplahir;
+                $row[] = $list->tgllahir;
+                $row[] = $list->jenkel;
+                $row[] = $list->prodinama;
+                $row[] = $tomboledit . " " . $tombolhapus;
+                $data[] = $row;
+            }
+            $output = [
+                "draw" => $request->getPost('draw'),
+                "recordsTotal" => $datamodel->count_all(),
+                "recordsFiltered" => $datamodel->count_filtered(),
+                "data" => $data
+            ];
+            echo json_encode($output);
+        }
+    }
+
+
 
     public function formtambah()
     {

@@ -16,41 +16,36 @@
             <th>Tempat Lahir</th>
             <th>Tgl.Lahir</th>
             <th>Jenkel</th>
+            <th>Prodi</th>
             <th>Aksi</th>
         </tr>
     </thead>
 
     <tbody>
-        <?php $nomor = 0;
-        foreach ($tampildata as $row) :
-            $nomor++;
-        ?>
-        <tr>
-            <td>
-                <input type="checkbox" name="nobp[]" class="centangNobp" value="<?= $row['nobp'] ?>">
-            </td>
-            <td><?= $nomor ?></td>
-            <td><?= $row['nobp'] ?></td>
-            <td><?= $row['nama'] ?></td>
-            <td><?= $row['tmplahir'] ?></td>
-            <td><?= $row['tgllahir'] ?></td>
-            <td><?= $row['jenkel'] ?></td>
-            <td>
-                <button type="button" class="btn btn-info btn-sm" onclick="edit('<?= $row['nobp'] ?>')">
-                    <i class="fa fa-tags"></i>
-                </button>
-                <button type="button" class="btn btn-danger btn-sm" onclick="hapus('<?= $row['nobp'] ?>')">
-                    <i class="fa fa-trash"></i>
-                </button>
-            </td>
-        </tr>
-        <?php endforeach; ?>
+
     </tbody>
 </table>
 <?= form_close(); ?>
 <script>
+function listdatamahasiswa() {
+    var table = $('#datamahasiswa').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+            "url": "<?= site_url('mahasiswa/listdata') ?>",
+            "type": "POST"
+        },
+        //optional
+        "columnDefs": [{
+            "targets": 0,
+            "orderable": false,
+        }],
+    })
+}
 $(document).ready(function() {
-    $('#datamahasiswa').DataTable();
+    // $('#datamahasiswa').DataTable();
+    listdatamahasiswa();
 
     $('#centangSemua').click(function(e) {
 
@@ -85,26 +80,30 @@ $(document).ready(function() {
                 confirmButtonText: 'Ya,Hapus',
                 cancelButtonText: 'Tidak'
             }).then((result) => {
-                $.ajax({
-                    type: "post",
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
-                    dataType: "json",
-                    success: function(response) {
-                        if (response.sukses) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: response.sukses
-                            });
-                            datamahasiswa();
+                if (result.value) {
+                    $.ajax({
+                        type: "post",
+                        url: $(this).attr('action'),
+                        data: $(this).serialize(),
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.sukses) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.sukses
+                                });
+                                datamahasiswa();
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(xhr.status + "\n" + xhr.responseText + "\n" +
+                                thrownError);
                         }
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        alert(xhr.status + "\n" + xhr.responseText + "\n" +
-                            thrownError);
-                    }
-                });
+                    });
+                }
+
+
             })
 
         }
