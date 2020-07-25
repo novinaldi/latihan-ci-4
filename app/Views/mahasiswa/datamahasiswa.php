@@ -4,7 +4,7 @@
         <i class="fa fa-trash-o"></i> Hapus Banyak
     </button>
 </p>
-<table class="table table-sm table-striped" id="datamahasiswa">
+<table class="table table-sm table-striped" id="datamahasiswa" style="width: 100%;">
     <thead>
         <tr>
             <th>
@@ -38,9 +38,18 @@ function listdatamahasiswa() {
         },
         //optional
         "columnDefs": [{
-            "targets": 0,
-            "orderable": false,
-        }],
+                "targets": 0,
+                "orderable": false,
+            },
+            {
+                "targets": 1,
+                "orderable": false,
+            },
+            {
+                "targets": 8,
+                "orderable": false,
+            }
+        ],
     })
 }
 $(document).ready(function() {
