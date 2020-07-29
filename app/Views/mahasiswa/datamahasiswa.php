@@ -24,6 +24,7 @@
     <tbody>
 
     </tbody>
+
 </table>
 <?= form_close(); ?>
 <script>
@@ -33,8 +34,8 @@ function listdatamahasiswa() {
         "serverSide": true,
         "order": [],
         "ajax": {
-            "url": "<?= site_url('mahasiswa/listdata') ?>",
-            "type": "POST"
+            url: "<?= site_url('mahasiswa/listdata') ?>",
+            type: "POST"
         },
         //optional
         "columnDefs": [{
@@ -118,6 +119,7 @@ $(document).ready(function() {
         }
         return false;
     });
+
 });
 
 function edit(nobp) {
