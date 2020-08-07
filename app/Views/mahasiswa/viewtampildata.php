@@ -8,6 +8,9 @@
 <link href="<?= base_url() ?>/assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 <script src="<?= base_url() ?>/assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() ?>/assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+
 <div class="col-sm-12">
     <div class="page-title-box">
         <h4 class="page-title">Data Mahasiswa</h4>

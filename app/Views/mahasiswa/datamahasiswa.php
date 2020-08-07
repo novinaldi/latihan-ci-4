@@ -180,4 +180,25 @@ function hapus(nobp) {
         }
     })
 }
+
+function upload(nobp) {
+    $.ajax({
+        type: "post",
+        url: "<?= site_url('mahasiswa/formupload') ?>",
+        data: {
+            nobp: nobp
+        },
+        dataType: "json",
+        success: function(response) {
+            if (response.sukses) {
+                $('.viewmodal').html(response.sukses).show();
+                $('#modalupload').modal('show');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status + "\n" + xhr.responseText + "\n" +
+                thrownError);
+        }
+    });
+}
 </script>
