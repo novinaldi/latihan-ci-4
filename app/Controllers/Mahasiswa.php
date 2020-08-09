@@ -8,6 +8,7 @@ use Config\Services;
 
 class Mahasiswa extends BaseController
 {
+
     public function index()
     {
 
