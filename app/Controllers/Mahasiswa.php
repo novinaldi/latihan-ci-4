@@ -8,12 +8,13 @@ use Config\Services;
 
 class Mahasiswa extends BaseController
 {
-
     public function index()
     {
+        helper('Akses');
+        if (cekakses()) {
 
-
-        return view('mahasiswa/viewtampildata');
+            return view('mahasiswa/viewtampildata');
+        }
     }
 
     public function ambildata()

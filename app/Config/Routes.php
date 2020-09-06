@@ -31,12 +31,17 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Layout::index');
+$routes->get('/', 'Layout::index', ['filter' => 'ceklogin']);
 
 $routes->get('/mahasiswa', 'Mahasiswa::index', ['filter' => 'ceklogin']);
 $routes->get('/mahasiswa/(:any)', 'Mahasiswa::$1', ['filter' => 'ceklogin']);
 $routes->get('/layout/(:any)', 'Layout::$1', ['filter' => 'ceklogin']);
 $routes->get('/layout', 'Layout::index', ['filter' => 'ceklogin']);
+
+// $routes->group('dosen', ['filter' => 'ceklogin'], function ($routes) {
+// 	$routes->get('dosen/index', 'Dosen::index');
+// });
+$routes->get('/dosen/(:any)', 'Dosen::$1', ['filter' => 'ceklogin']);
 
 /**
  * --------------------------------------------------------------------

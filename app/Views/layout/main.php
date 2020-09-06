@@ -78,7 +78,7 @@ $session = \Config\Services::session();
                                 <!-- item-->
                                 <div class="dropdown-item noti-title">
                                     <h5>
-                                        <?= $session->get('namauser'); ?>
+                                        <?= $session->get('namauser'); ?> (<?= $session->get('idlevel'); ?>)
                                     </h5>
                                 </div>
                                 <a class="dropdown-item" href="#"><i

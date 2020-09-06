@@ -53,7 +53,10 @@ class Login extends BaseController
                 //cek user dulu ke database
                 $query_cekuser = $this->db->query("SELECT * FROM users JOIN levels ON levelid=userlevelid WHERE userid='$userid'");
 
+                $query_cekusermahasiswa = $this->db->query("SELECT * FROM mahasiswa JOIN levels ON levelid=mhslevelid WHERE nobp='$userid'");
+
                 $result = $query_cekuser->getResult();
+                $result_mhs = $query_cekusermahasiswa->getResult();
 
                 if (count($result) > 0) {
                     // lanjutkan
@@ -73,7 +76,33 @@ class Login extends BaseController
 
                         $msg = [
                             'sukses' => [
-                                'link' => '/mahasiswa/index'
+                                'link' => site_url('layout/index')
+                            ]
+                        ];
+                    } else {
+                        $msg = [
+                            'error' => [
+                                'password' => 'Maaf password anda salah'
+                            ]
+                        ];
+                    }
+                } elseif (count($result_mhs) > 0) {
+                    $row_mhs = $query_cekusermahasiswa->getRow();
+                    $pass_mhs = $row_mhs->mhspass;
+
+                    if (password_verify($pass, $pass_mhs)) {
+                        $simpan_session = [
+                            'login' => true,
+                            'iduser' => $userid,
+                            'namauser' => $row_mhs->nama,
+                            'idlevel' => $row_mhs->mhslevelid,
+                            'namalevel' => $row_mhs->levelnama
+                        ];
+                        $this->session->set($simpan_session);
+
+                        $msg = [
+                            'sukses' => [
+                                'link' => site_url('layout/index')
                             ]
                         ];
                     } else {
@@ -101,4 +130,9 @@ class Login extends BaseController
         $this->session->destroy();
         return redirect()->to('/login/index');
     }
+
+    // function test()
+    // {
+    //     echo password_hash('123', PASSWORD_BCRYPT);
+    // }
 }
